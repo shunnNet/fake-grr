@@ -1,12 +1,11 @@
 <template lang="pug">
 NavBar.layout-nav
-Test
 
 main.layout-main
   Index
 
 .layout-footer
-  .box-lg
+  .box-sm
     NavSub
     FootBar
 </template>

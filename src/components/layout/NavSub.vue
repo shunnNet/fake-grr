@@ -205,17 +205,20 @@ export default {
     }
   }
   &__left-top {
-    flex: 0 0 25%;
     @include lg {
+      flex: 0 0 20%;
+    }
+    @include xl {
       flex: 0 0 25%;
     }
   }
   &__right-bottom {
     display: flex;
     width: 100%;
+    margin-top: 4px;
 
-    @include xl {
-      width: auto;
+    @include lg {
+      margin-top: -5px;
       flex: 1;
     }
   }
@@ -247,9 +250,15 @@ export default {
     }
   }
   &__link-group {
-    margin-top: 16px;
+    &::before {
+      content: "";
+      display: block;
+      height: 16px;
+    }
+    // margin-top: 16px; NOTE: Failed if use margin-top
   }
   &__list-unit {
+    line-height: 1.5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -275,14 +284,17 @@ export default {
     }
   }
   &__logo {
-    margin-bottom: 60px;
     height: auto;
     justify-content: flex-start;
   }
   &__socials {
+    margin-top: 40px;
     display: flex;
     max-width: 380px;
     flex-wrap: wrap;
+    @include lg {
+      margin-top: 60px;
+    }
   }
   &__social {
     @extend %reset-a;
@@ -293,9 +305,6 @@ export default {
     font-size: 14px;
     color: $footer-icon-text-color;
     margin-bottom: 20px;
-    // &:last-child {
-    //   margin-bottom: 0;
-    // }
     .iconText-icon {
       margin-right: 8px;
     }

@@ -20,7 +20,7 @@
 export default {
   props: {
     enterDuration: {
-      default: () => "0.8s",
+      default: () => "0.3s",
       type: String,
     },
     leaveDuration: {
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     getMaxLength(el) {
-      const actualLength = el[this.scrollLengthProp]
+      const actualLength = el[this.scrollLengthProp] +1 // NOTE: scollHeight don't have float value
 
       return actualLength > this.max
         ? this.max
@@ -79,10 +79,11 @@ export default {
       el.style.overflowY = state
     },
     setLength(el, length) {
+      //  TODO: stunning when target has padding or margin
       el.style[this.lengthProp] = `${length}px`
     },
     beforeEnter(el) {
-      el.style.transition = `${this.lengthProp} ${this.enterDuration} ${this.enterFunction}, transform .8s`
+      el.style.transition = `${this.lengthProp} ${this.enterDuration} ${this.enterFunction}, transform ${this.enterDuration}, opacity ${this.enterDuration}`
       this.setLength(el, 0)
       this.setOverflow(el, 'hidden')
     },
@@ -96,7 +97,7 @@ export default {
       this.setOverflow(el, 'auto')
     },
     beforeLeave(el) {
-      el.style.transition = `${this.lengthProp} ${this.leaveDuration} ${this.leaveFunction}`
+      el.style.transition = `${this.lengthProp} ${this.leaveDuration} ${this.leaveFunction}, opacity 0.2s`
       this.setOverflow(el, 'hidden')
     },
     leave(el) {
@@ -122,20 +123,20 @@ export default {
 <style lang="scss">
 .slide-enter-from {
   transform: translate3d(-20px,0,0);
-  // opacity: 0;
+  opacity: 0;
 }
 .slide-enter-active{
-  // transition: ;
+  // transition: opacity .2s;
 }
 .slide-enter-to {
   transform: translate3d(0px,0,0);
-  // opacity: 1;
+  opacity: 1;
 }
 .slide-leave-from {
   opacity: 1;
 }
-// .slide-enter-to {
-//   opacity: 0;
-// }
+.slide-leave-to {
+  opacity: 0;
+}
 
 </style>

@@ -21,7 +21,6 @@ export default {
     const regions = ref(["Global", "Taiwan"]);
     const region = ref("Region");
     watch(region, (now, previous) => {
-      console.log("now", now);
       switch (now) {
         case "Global":
           window.location.href = "https://www.gogoro.com/";
@@ -47,6 +46,7 @@ export default {
   padding: 30px 0;
   font-size: 12px;
   @include lg {
+    padding: 0;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -59,6 +59,7 @@ export default {
     color: #888;
     margin-bottom: 10px;
     @include lg {
+      line-height: 64px;
       margin-bottom: 0;
       margin-right: 25px;
     }
@@ -80,6 +81,9 @@ export default {
       color: #b9bcbf;
       text-decoration: underline;
     }
+    @include lg {
+      line-height: 64px;
+    }
   }
   &__region {
     @extend %reset-select;
@@ -91,7 +95,7 @@ export default {
     color: #fff;
     padding-right: 15px;
     background-image: url("~@/assets/images/icon/Arrow.svg");
-    background-size: contain;
+    background-size: 0.8em;
     background-repeat: no-repeat;
     background-position: right center;
     margin-bottom: 30px;
