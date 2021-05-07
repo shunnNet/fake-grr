@@ -1,0 +1,35 @@
+
+%useBlockTheme {
+  border-radius: $global-block-radius;
+  background-color: #fff;
+}
+
+%titleBox {
+  color: #000;
+  // &-title {
+  //   font-size: 1.5em;
+  // }
+  // &-sub {
+  //   font-size: 1em;
+  // }
+}
+
+%blockIcon {
+  font-size: 1em;
+  vertical-align: bottom;
+}
+
+%blockSubject {
+  @extend %reset-text;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+%blockTitle {
+  font-size: 1.2em;
+  font-weight: bolder;
+}
+%blockTitleSub {
+  font-size: 0.8em;
+  color: gray;
+}

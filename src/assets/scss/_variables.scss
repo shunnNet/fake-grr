@@ -1,0 +1,90 @@
+@use "sass:map";
+
+// Color ----
+
+$gray-200: #f2f2f2;
+$gray-300: lightgray;
+$gray-400: #b2b2b2;
+$gray-500: #adb5bd;
+$gray-800: gray;
+$gray-900: #2f2f2f;
+$black: #000;
+
+$red-800: #ad0a1a;
+$red-700: #ff0019;
+$red-500: #fa5869;
+$red-300: #fe586a;
+$red-200: #eb9da5;
+
+$orange: #ff5722;
+$orange-500: orange;
+
+$blue-200: #92beff;
+$blue-700: #3989ff;
+$blue-800: #0d6efd;
+// $green      : green;
+$green-400: #07aa07;
+$green-200: #6ed786;
+
+// theme
+$theme: (
+  light: #fff,
+  black: #323237,
+  sub: #B9BCBF
+);
+
+
+
+
+// font
+$font-family-base: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  'Microsoft JhengHei', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-color-base: map-get($theme, base);
+$font-size-base: 16px;
+
+// Body  ----
+$body-bg: #f8f8f8;
+$body-color: map-get($map: $theme, $key: black);
+$footer-bg: $gray-400;
+$footer-color: $gray-900;
+
+// link
+$link-color: map-get($theme, base);
+$link-hover-color: #00d7ff;
+$link-active-color: map-get($theme, sub);
+
+$nav-link-color: map-get($theme, light);
+$nav-link-hover-color: #00d7ff;
+
+$footer-bg-color : #323237;
+$footer-title-color : #737d82;
+$footer-list-item-color: #f6f6f6;
+$footer-list-item-hover-color:#b9bcbf;
+
+$footer-icon-text-color:#b9bcbf;
+
+$footer-select : #fff;
+
+// box / container
+$box-width: (
+  xl: 1140px,
+  lg: 940px,
+  md: 720px,
+  sm: 576px,
+  
+);
+$box-space: 15px;
+
+// breakpoint
+$breakpoints: (
+  
+  xl: 1200px,
+  lg: 992px,
+  md: 768px,
+  sm: 554px,
+);
+
+// others
+$global-block-radius: 10px;
+$global-block-shadow: 10px;
+$global-shadow:  0px 5px 10px 0px rgba(0, 0, 0, 0.2);

@@ -1,0 +1,92 @@
+
+.reset-a {
+  @extend %reset-a;
+}
+
+.linkImage {
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.8);
+  }
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.link {
+  color: $link-color;
+  &:visited {
+    color: inherit;
+  }
+  &:hover {
+    color: $link-hover-color;
+    font-weight: bold;
+  }
+
+  &:active {
+    color: $link-active-color;
+  }
+}
+
+.reset-btn {
+  @extend %reset-btn;
+}
+
+.text-ellipsis {
+  @extend %textEllipsis;
+}
+
+.img--fluid {
+  @extend %img--fluid;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 1 1px;
+  // ie11 will not stretch when row, and basis is 0;
+}
+.f-col {
+  flex-direction: column;
+}
+
+.f-main-end {
+  justify-content: flex-end;
+}
+.f-main-center {
+  justify-content: center;
+}
+.f-main-between {
+  justify-content: space-between;
+}
+
+.f-cross-center {
+  align-items: center;
+}
+.f-all-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.f-self-cross-start {
+  align-self: flex-start;
+}
+.w-full {
+  width: 100%;
+}
+
+@each $name, $color in $theme {
+  .color-#{$name}{
+    color: color($name);
+  }
+}
