@@ -8,7 +8,7 @@ nav.main-nav(
     .main-nav__container
       TogglerMenu.main-nav__toggle(@click="toggleMenu()", :active="menuActive")
 
-      LogoBox.main-nav__logo
+      h1.main-nav__logo gogoro
       a.main-nav__account(href="https://my.gogoro.com/?lang=en-US")
         Account
     ul.main-nav__list(:class="{ 'main-nav__list--active': menuActive }")
@@ -22,12 +22,11 @@ nav.main-nav(
 
 <script>
 import { computed, ref, watch } from "vue";
-import LogoBox from "@/components/LogoBox.vue";
 import TogglerMenu from "@/components/TogglerMenu.vue";
 import { watchMedia, unwatchMedia } from "@/assets/scripts/mediaStore.js";
 
 export default {
-  components: { LogoBox, TogglerMenu },
+  components: { TogglerMenu },
   setup() {
     const maxOpacityScrollColor = 300;
 
@@ -100,6 +99,9 @@ export default {
   }
   &__box.box-lg {
     padding: 0;
+    @include lg {
+      padding: 0 $box-space;
+    }
   }
   &__container {
     width: 100%;
@@ -108,10 +110,26 @@ export default {
     height: 100%;
     justify-content: space-between;
     align-items: center;
+    background-color: rgb(18, 18, 21);
     z-index: 2;
+    @include lg {
+      background-color: transparent;
+    }
   }
   &__logo {
-    margin-right: 16px;
+    @include hide-text();
+    background-image: url("~@/assets/images/icon/Logo.svg");
+    background-repeat: no-repeat;
+    background-size: 78px 22px;
+    background-position: center;
+    height: 100%;
+    width: 100px;
+
+    @include lg {
+      margin-right: 16px;
+      width: 105px;
+      background-size: auto 27px;
+    }
   }
   &__account {
     display: flex;
@@ -132,7 +150,7 @@ export default {
     display: flex;
     transition: 0.5s;
     width: 100%;
-    background-color: black;
+    background-color: rgb(18, 18, 21);
     height: 60px;
     z-index: 1;
 

@@ -11,7 +11,7 @@
 // @debug list.nth($bp-list, 1);
 // @debug list.index($bp-list, xxl);
 // @debug append($bp-list, fluid);
-$bp-list: (xxl, xl, lg, md, sm);
+// $bp-list: (xxl, xl, lg, md, sm);
 $bp-list: (sm, md, lg, xl, xxl);
 
 .box {
@@ -19,11 +19,19 @@ $bp-list: (sm, md, lg, xl, xxl);
   margin: 0 auto;
   padding: 0 $box-space;
   max-width: map-get($box-width, $key: xxl);
-  @each $size, $width in $breakpoints {
-    @media screen and (min-width: $width) {
-      max-width: map-get($box-width, $size);
+
+  @each $name in $bp-list {
+    $targetWidth: map-get(
+      $map: $box-width,
+      $key: $name,
+    );
+    $bp: map-get($breakpoints, $name);
+
+    @media screen and (min-width: $bp) {
+      max-width: $targetWidth;
     }
   }
+  
 }
 
 @each $size, $width in $box-width {
