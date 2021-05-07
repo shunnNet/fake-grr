@@ -1,26 +1,56 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="pug">
+NavBar.layout-nav
+Test
+
+main.layout-main
+  Index
+
+.layout-footer
+  .box-lg
+    NavSub
+    FootBar
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from "@/components/layout/NavBar.vue";
+import NavSub from "@/components/layout/NavSub.vue";
+import FootBar from "@/components/layout/FootBar.vue";
+import Index from "@/components/pages/Index.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    NavBar,
+    NavSub,
+    FootBar,
+    Index,
+  },
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.layout {
+  &-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+  }
+  &-nav,
+  &-footer {
+    width: 100%;
+  }
+  &-main {
+    flex: 1 0 1800px;
+  }
+  &-footer {
+    background-color: #323237;
+  }
 }
 </style>

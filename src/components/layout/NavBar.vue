@@ -1,0 +1,186 @@
+<template lang="pug">
+nav.main-nav(
+  :style="{ backgroundColor: bgColor }",
+  @mouseenter="handleHover(true)",
+  @mouseleave="handleHover(false)"
+)
+  .main-nav__box.box-lg
+    .main-nav__container
+      TogglerMenu.main-nav__toggle(@click="toggleMenu()", :active="menuActive")
+
+      LogoBox.main-nav__logo
+      a.main-nav__account(href="https://my.gogoro.com/?lang=en-US")
+        Account
+    ul.main-nav__list(:class="{ 'main-nav__list--active': menuActive }")
+      li.main-nav__list-item 
+        a.main-nav__link(href="https://www.gogoro.com/smartscooter/") Smartscooter®
+      li.main-nav__list-item
+        a.main-nav__link(href="https://www.gogoro.com/gogoro-network/") Gogoro Network®
+      li.main-nav__list-item
+        a.main-nav__link(href="https://www.gogoro.com/news/") News
+</template>
+
+<script>
+import { computed, ref, watch } from "vue";
+import LogoBox from "@/components/LogoBox.vue";
+import TogglerMenu from "@/components/TogglerMenu.vue";
+import { watchMedia, unwatchMedia } from "@/assets/scripts/mediaStore.js";
+
+export default {
+  components: { LogoBox, TogglerMenu },
+  setup() {
+    const maxOpacityScrollColor = 300;
+
+    let opacity = ref(1);
+
+    const hoverControl = ref(false);
+    const handleHover = (toState) => {
+      if (!mediaControl.value) {
+        if (toState === true) {
+          hoverControl.value = true;
+        } else {
+          hoverControl.value = false;
+          modifyOpacityByScroll();
+        }
+      }
+    };
+    const mediaControl = ref(false);
+    watchMedia("992", (match) => {
+      if (match) {
+        mediaControl.value = false;
+        modifyOpacityByScroll && modifyOpacityByScroll();
+      } else {
+        mediaControl.value = true;
+      }
+    });
+
+    const modifyOpacityByScroll = () => {
+      if (!mediaControl.value && !hoverControl.value) {
+        opacity.value = window.scrollY / maxOpacityScrollColor;
+      }
+    };
+    window.onscroll = modifyOpacityByScroll;
+    modifyOpacityByScroll();
+
+    let bgColor = computed(
+      () =>
+        `rgba(18,18,21, ${
+          mediaControl.value || hoverControl.value ? 1 : opacity.value
+        })`
+    );
+
+    const menuActive = ref(false);
+    const toggleMenu = () => {
+      menuActive.value = !menuActive.value;
+    };
+
+    return {
+      opacity,
+      bgColor,
+      modifyOpacityByScroll,
+      menuActive,
+      toggleMenu,
+      handleHover,
+    };
+  },
+};
+</script>
+
+<style lang="scss">
+.main-nav {
+  height: 50px;
+  transition: background-color 0.3s;
+
+  &__box {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__box.box-lg {
+    padding: 0;
+  }
+  &__container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+  &__logo {
+    margin-right: 16px;
+  }
+  &__account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+  }
+  &__toggle {
+    display: block;
+  }
+  &__list {
+    position: absolute;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    display: flex;
+    transition: 0.5s;
+    width: 100%;
+    background-color: black;
+    height: 60px;
+    z-index: 1;
+
+    &--active {
+      transform: translate3d(0, 100%, 0);
+      opacity: 1;
+    }
+  }
+  &__link {
+    @extend %reset-a;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 100%;
+    font-size: 14px;
+    color: $nav-link-color;
+    transition: color 0.2s;
+    &:hover {
+      color: $nav-link-hover-color;
+    }
+  }
+
+  @include lg {
+    height: 60px;
+    &__box {
+      justify-content: flex-start;
+    }
+    &__box.box-lg {
+      padding: 0 $box-space;
+    }
+    &__container {
+      width: auto;
+    }
+    &__account {
+      display: none;
+    }
+    &__toggle {
+      display: none;
+    }
+    &__list {
+      position: static;
+      display: flex;
+      opacity: 1;
+      transform: unset;
+      background-color: transparent;
+      width: auto;
+      transition: none;
+    }
+  }
+}
+</style>
