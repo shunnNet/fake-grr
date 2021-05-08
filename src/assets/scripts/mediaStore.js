@@ -4,6 +4,11 @@ const medias = {
     callbacks: [],
     mql: null,
   },
+  "768": {
+    watch: "(min-width: 768px)",
+    callbacks: [],
+    mql: null,
+  },
 };
 
 for (const key in medias) {
@@ -18,14 +23,18 @@ for (const key in medias) {
 export function watchMedia(name, callback, runInit = true) {
   if (medias[name] && typeof callback === "function") {
     medias[name].callbacks.push(callback);
-    console.log(medias[name].mql.matches);
+
     runInit && callback(medias[name].mql.matches);
   }
+  return function()  {
+    const pos = medias[name].callbacks.findIndex(callback);
+    medias[name].callbacks.splice(pos, 1);
+  };
 }
 
 export function unwatchMedia(name, callback) {
   if (medias[name] && typeof callback === "function") {
     const pos = medias[name].callbacks.findIndex(callback);
-    medias[name.callbacks].splice(pos, 1);
+    medias[name].callbacks.splice(pos, 1);
   }
 }

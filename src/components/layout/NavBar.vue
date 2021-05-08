@@ -72,6 +72,9 @@ export default {
     const toggleMenu = () => {
       menuActive.value = !menuActive.value;
     };
+    window.onresize = function () {
+      menuActive.value = false;
+    };
 
     return {
       opacity,
@@ -121,7 +124,7 @@ export default {
     background-image: url("~@/assets/images/icon/Logo.svg");
     background-repeat: no-repeat;
     background-size: 78px 22px;
-    background-position: center;
+    background-position: 0 calc(50% + 1px);
     height: 100%;
     width: 100px;
 
@@ -129,6 +132,9 @@ export default {
       margin-right: 16px;
       width: 105px;
       background-size: auto 27px;
+    }
+    @include xl {
+      margin-right: 24px;
     }
   }
   &__account {
@@ -143,33 +149,85 @@ export default {
   }
   &__list {
     position: absolute;
-    justify-content: center;
+    display: flex;
+    
+    width: 100%;
     bottom: 0;
     left: 0;
-    opacity: 0;
-    display: flex;
-    transition: 0.5s;
-    width: 100%;
-    background-color: rgb(18, 18, 21);
-    height: 60px;
+
+    background-color: #202023;
+
     z-index: 1;
+    height: calc(100vh - 50px);
+    overflow: hidden;
+    opacity: 1;
+    transform: translate3d(0, 0%, 0);
+    transition: transform 0.5s;
+
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
     &--active {
       transform: translate3d(0, 100%, 0);
-      opacity: 1;
+    }
+
+    @include sm {
+      flex-direction: row;
+      justify-content: center;
+      background-color: rgb(18, 18, 21);
+      height: 60px;
+      opacity: 0;
+      transform: translate3d(0, 0%, 0);
+      transition: opacity 0.5s, transform 0.5s;
+
+      &--active {
+        transform: translate3d(0, 100%, 0);
+        opacity: 1;
+      }
+    }
+  }
+  &__list-item {
+    width: 100%;
+    @include sm {
+      width: auto;
     }
   }
   &__link {
     @extend %reset-a;
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 0 12px;
+    padding: 20px;
     height: 100%;
-    font-size: 14px;
+    font-size: 18px;
     color: $nav-link-color;
     transition: color 0.2s;
+    cursor: pointer;
+    text-align: center;
+
     &:hover {
       color: $nav-link-hover-color;
+    }
+    @include sm {
+      font-size: 13px;
+      line-height: 54px;
+      padding: 0 10px;
+      height: 54px;
+    }
+    @include md {
+      font-size: 14px;
+      line-height: 60px;
+      padding: 0 14px;
+      height: 60px;
+    }
+    @include lg {
+      font-size: 14px;
+      padding: 0 12px;
+    }
+    @include xl {
+      font-size: 16px;
+      padding: 0 16px;
     }
   }
 
