@@ -49,6 +49,7 @@ export default {
     flex: 1 0 1800px;
   }
   &-footer {
+    margin-top: 10px;
     background-color: #323237;
   }
 }

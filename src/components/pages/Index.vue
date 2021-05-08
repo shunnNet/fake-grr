@@ -1,5 +1,30 @@
 <template lang='pug'>
-section.index__entryBanner
+Swiper.index__entryBanner(
+  effect="fade",
+  loop,
+  pagination,
+  :autoplay="{ delay: 10000, disableOnInteraction: false }"
+)
+  SwiperSlide.movie(key="video")
+    video(
+      :src="require('@/assets/images/home_vision_1080_v02.mp4')",
+      autoplay="autoplay",
+      loop,
+      control,
+      muted
+    )
+    .movie__content
+      h2.movie__title 
+        | A Better Way Forward to
+        br
+        | Smarter, Cleaner Cities
+      p.movie__desc
+        | Gogoro is reinventing urban transportation with an ecosystem of sustainable energy solutions for the world’s modern cities.
+  SwiperSlide.vivaMix(key="vivaMix")
+    .vivaMix__content
+      .vivaMix__slogan MIX IT UP
+      a.vivaMix__more(href="https://www.gogoro.com/smartscooter/viva/mix/") LEARN MORE
+
 .index__box
   section.index__campaigns
     ul.campaignList
@@ -53,16 +78,26 @@ section.index__entryBanner
         icon="Arrow2",
         reverse
       ) LEARN MORE
+  Quotes
 
-  section.index__appreciate
   section.index__impact
+    Impact
 </template>
 
 <script>
 import { ref } from "vue";
 import IconText from "@/components/IconText.vue";
+import SwitchBg from "@/components/SwitchBg.vue";
+import Quotes from "@/components/Quotes.vue";
+import Impact from "@/components/Impact.vue";
+
 export default {
-  components: { IconText },
+  components: {
+    IconText,
+    SwitchBg,
+    Quotes,
+    Impact,
+  },
   setup() {
     const campaignList = ref([
       {
@@ -112,12 +147,54 @@ export default {
 $gutter: 6px;
 
 .index {
+  &__entryBanner {
+    position: relative;
+    height: calc(100vh - 80px);
+    min-height: 420px;
+    max-height: 760px;
+
+    @include sm {
+      height: calc(100vh - 120px);
+      min-height: 560px;
+      max-height: 1140px;
+    }
+    @include md {
+      height: calc(100vh - 120px);
+      min-height: 680px;
+      max-height: 1200px;
+    }
+    @include xl {
+      height: calc(100vh - 200px);
+      max-height: 1640px;
+      min-height: 820px;
+    }
+    &.swiper-container-horizontal > .swiper-pagination-bullets {
+      bottom: 20px;
+    }
+    .swiper-pagination-bullet {
+      opacity: 1 !important; // overwrite library default
+      border: 2px solid #737d82;
+      background-color: #737d82;
+      height: 8px;
+      width: 8px;
+      margin: 0 10px !important;
+      @include lg {
+        height: 12px;
+        width: 12px;
+      }
+      &-active {
+        border: 2px solid #fff;
+        background-color: rgba(115, 125, 130, 0);
+      }
+    }
+  }
   &__box {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: 0 auto;
   }
   &__campaigns {
     margin-top: $gutter;
+
   }
   &__photos {
     margin-top: $gutter;
@@ -127,6 +204,146 @@ $gutter: 6px;
   }
   &__battery {
     margin-top: $gutter;
+  }
+  &__appreciate {
+    margin-top: $gutter;
+  }
+  &__impact {
+    margin-top: $gutter;
+  }
+}
+
+
+.movie {
+  user-select: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  &__content {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    max-width: 660px;
+    text-align: center;
+    padding: 0 16px;
+  }
+  &__title {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.1;
+
+    @include sm {
+      font-size: 36px;
+    }
+    @include md {
+      font-size: 54px;
+    }
+  }
+  &__desc {
+    font-size: 16px;
+    line-height: 1.25;
+    max-width: 18.5em;
+    margin: 0 auto;
+    margin-top: 20px;
+
+    @include sm {
+      font-size: 18px;
+      max-width: 20em;
+    }
+    @include md {
+      margin-top: 24px;
+      max-width: 500px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+  }
+}
+
+.vivaMix {
+  user-select: none;
+  position: relative;
+  background-image: url("~@/assets/images/viva.png"),
+    url("~@/assets/images/banner.jpg");
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-size: 180%, cover;
+  color: #ffffff;
+  @include md {
+    background-image: url("~@/assets/images/viva_lg.png"),
+      url("~@/assets/images/banner_lg.png");
+
+    background-size: contain, cover;
+  }
+
+  &__content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    top: 72%;
+    @include sm {
+      top: 76%;
+    }
+    @include md {
+      top: 66%;
+    }
+    @include lg {
+      top: 70%;
+    }
+    @include xl {
+      top: 74%;
+    }
+  }
+
+  &__slogan {
+    color: #ffffff;
+    font-size: 0;
+    width: 90vw;
+    max-width: 305px;
+    height: 70px;
+    overflow: hidden;
+    text-indent: -199%;
+    background: url("~@/assets/images/viva-mix-slogan.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    @include hide-text();
+    @include xl {
+      max-width: 402px;
+    }
+  }
+  &__more {
+    @extend %reset-a;
+    display: flex;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    margin-top: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    height: 40px;
+    cursor: pointer;
+    transition: color 0.25s, background-color 0.25s;
+    padding: 0 1.66em 0 1.8em;
+    align-items: center;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0.15em;
+
+    @include sm {
+      padding: 0 1.86em 0 2em;
+      height: 48px;
+      border-radius: 24px;
+    }
+
+    &:hover {
+      background-color: #ffffff;
+      color: #323237;
+    }
   }
 }
 
