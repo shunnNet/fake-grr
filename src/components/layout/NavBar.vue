@@ -1,56 +1,62 @@
 <template lang="pug">
-nav.main-nav(
+nav.mainNav(
   :style="{ backgroundColor: bgColor }",
   @mouseenter="handleHover(true)",
   @mouseleave="handleHover(false)"
 )
-  .main-nav__box.box-lg
-    .main-nav__container
-      TogglerMenu.main-nav__toggle(@click="toggleMenu()", :active="menuActive")
+  .mainNav__box.box-lg
+    .mainNav__iconWrapper
+      TogglerMenu.mainNav__toggle(@click="toggleMenu()", :active="menuActive")
 
-      h1.main-nav__logo gogoro
-      a.main-nav__account(href="https://my.gogoro.com/?lang=en-US")
+      h1.mainNav__logo gogoro
+      a.mainNav__account(href="https://my.gogoro.com/?lang=en-US")
         Account
-    ul.main-nav__list(:class="{ 'main-nav__list--active': menuActive }")
-      li.main-nav__list-item 
-        a.main-nav__link(href="https://www.gogoro.com/smartscooter/") Smartscooter®
-      li.main-nav__list-item
-        a.main-nav__link(href="https://www.gogoro.com/gogoro-network/") Gogoro Network®
-      li.main-nav__list-item
-        a.main-nav__link(href="https://www.gogoro.com/news/") News
+    .mainNav__drop(:class="{ 'mainNav__drop--active': menuActive }")
+      ul.mainNav__list
+        li.mainNav__listItem 
+          a.mainNav__link(href="https://www.gogoro.com/smartscooter/") Smartscooter®
+        li.mainNav__listItem
+          a.mainNav__link(href="https://www.gogoro.com/gogoro-network/") Gogoro Network®
+        li.mainNav__listItem
+          a.mainNav__link(href="https://www.gogoro.com/news/") News
 </template>
 
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, ref, onUnmounted } from "vue";
 import TogglerMenu from "@/components/TogglerMenu.vue";
-import { watchMedia, unwatchMedia } from "@/assets/scripts/mediaStore.js";
+import { watchMedia } from "@/assets/scripts/mediaStore.js";
 
 export default {
   components: { TogglerMenu },
   setup() {
     const maxOpacityScrollColor = 300;
 
-    let opacity = ref(1);
+    const opacity = ref(1);
 
     const hoverControl = ref(false);
     const handleHover = (toState) => {
-      if (!mediaControl.value) {
-        if (toState === true) {
-          hoverControl.value = true;
-        } else {
-          hoverControl.value = false;
-          modifyOpacityByScroll();
-        }
+      if (mediaControl.value === true) {
+        return;
+      }
+      if (toState === true) {
+        hoverControl.value = true;
+      } else {
+        hoverControl.value = false;
+        modifyOpacityByScroll();
       }
     };
+
     const mediaControl = ref(false);
-    watchMedia("992", (match) => {
+    const unwatchMedia = watchMedia("992", (match) => {
       if (match) {
         mediaControl.value = false;
         modifyOpacityByScroll && modifyOpacityByScroll();
       } else {
         mediaControl.value = true;
       }
+    });
+    onUnmounted(() => {
+      unwatchMedia();
     });
 
     const modifyOpacityByScroll = () => {
@@ -61,7 +67,7 @@ export default {
     window.onscroll = modifyOpacityByScroll;
     modifyOpacityByScroll();
 
-    let bgColor = computed(
+    const bgColor = computed(
       () =>
         `rgba(18,18,21, ${
           mediaControl.value || hoverControl.value ? 1 : opacity.value
@@ -72,6 +78,7 @@ export default {
     const toggleMenu = () => {
       menuActive.value = !menuActive.value;
     };
+
     window.onresize = function () {
       menuActive.value = false;
     };
@@ -89,16 +96,21 @@ export default {
 </script>
 
 <style lang="scss">
-.main-nav {
+.mainNav {
   height: 50px;
   transition: background-color 0.3s;
-
+  @include lg {
+    height: 60px;
+  }
   &__box {
     position: relative;
     display: flex;
-    height: 100%;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
+    @include lg {
+      justify-content: flex-start;
+    }
   }
   &__box.box-lg {
     padding: 0;
@@ -106,31 +118,32 @@ export default {
       padding: 0 $box-space;
     }
   }
-  &__container {
-    width: 100%;
+  &__iconWrapper {
     position: relative;
     display: flex;
-    height: 100%;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    height: 100%;
     background-color: rgb(18, 18, 21);
     z-index: 2;
     @include lg {
+      width: auto;
       background-color: transparent;
     }
   }
   &__logo {
     @include hide-text();
+    height: 100%;
+    width: 100px;
     background-image: url("~@/assets/images/icon/Logo.svg");
     background-repeat: no-repeat;
     background-size: 78px 22px;
     background-position: 0 calc(50% + 1px);
-    height: 100%;
-    width: 100px;
 
     @include lg {
-      margin-right: 16px;
       width: 105px;
+      margin-right: 16px;
       background-size: auto 27px;
     }
     @include xl {
@@ -143,41 +156,35 @@ export default {
     justify-content: center;
     height: 50px;
     width: 50px;
+    @include lg {
+      display: none;
+    }
   }
   &__toggle {
     display: block;
+    @include lg {
+      display: none;
+    }
   }
-  &__list {
+  &__drop {
     position: absolute;
-    display: flex;
-    
-    width: 100%;
     bottom: 0;
     left: 0;
-
-    background-color: #202023;
-
-    z-index: 1;
+    width: 100%;
     height: calc(100vh - 50px);
     overflow: hidden;
+    z-index: 1;
     opacity: 1;
     transform: translate3d(0, 0%, 0);
     transition: transform 0.5s;
-
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
+    background-color: #202023;
     &--active {
       transform: translate3d(0, 100%, 0);
     }
-
     @include sm {
-      flex-direction: row;
-      justify-content: center;
-      background-color: rgb(18, 18, 21);
-      height: 60px;
+      height: auto;
       opacity: 0;
+      background-color: rgb(18, 18, 21);
       transform: translate3d(0, 0%, 0);
       transition: opacity 0.5s, transform 0.5s;
 
@@ -186,8 +193,27 @@ export default {
         opacity: 1;
       }
     }
+    @include lg {
+      position: static;
+      opacity: 1;
+      transform: unset;
+      background-color: transparent;
+      width: auto;
+      transition: none;
+    }
   }
-  &__list-item {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    @include sm {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  &__listItem {
     width: 100%;
     @include sm {
       width: auto;
@@ -198,64 +224,36 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
     height: 100%;
+    padding: 20px;
     font-size: 18px;
+    text-align: center;
     color: $nav-link-color;
     transition: color 0.2s;
     cursor: pointer;
-    text-align: center;
 
     &:hover {
       color: $nav-link-hover-color;
     }
     @include sm {
+      height: 54px;
+      padding: 0 10px;
       font-size: 13px;
       line-height: 54px;
-      padding: 0 10px;
-      height: 54px;
     }
     @include md {
+      height: 60px;
+      padding: 0 14px;
       font-size: 14px;
       line-height: 60px;
-      padding: 0 14px;
-      height: 60px;
     }
     @include lg {
-      font-size: 14px;
       padding: 0 12px;
+      font-size: 14px;
     }
     @include xl {
-      font-size: 16px;
       padding: 0 16px;
-    }
-  }
-
-  @include lg {
-    height: 60px;
-    &__box {
-      justify-content: flex-start;
-    }
-    &__box.box-lg {
-      padding: 0 $box-space;
-    }
-    &__container {
-      width: auto;
-    }
-    &__account {
-      display: none;
-    }
-    &__toggle {
-      display: none;
-    }
-    &__list {
-      position: static;
-      display: flex;
-      opacity: 1;
-      transform: unset;
-      background-color: transparent;
-      width: auto;
-      transition: none;
+      font-size: 16px;
     }
   }
 }

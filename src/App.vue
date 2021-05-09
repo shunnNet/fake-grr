@@ -1,5 +1,6 @@
 <template lang="pug">
-NavBar.layout-nav
+.layout-nav
+  NavBar
 
 main.layout-main
   Index
@@ -41,14 +42,12 @@ export default {
     width: 100%;
     z-index: 10000;
   }
-  &-nav,
+
+  &-main {
+    flex: 1 0 auto;
+  }
   &-footer {
     width: 100%;
-  }
-  &-main {
-    flex: 1 0 1800px;
-  }
-  &-footer {
     margin-top: 10px;
     background-color: #323237;
   }
