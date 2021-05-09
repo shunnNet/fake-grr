@@ -28,23 +28,23 @@ $green-200: #6ed786;
 
 // theme
 $theme: (
-  light: #fff,
-  black: #323237,
-  sub: #B9BCBF
+  "light": #fff,
+  "black": #323237,
+  "sub": #b9bcbf,
 );
 
-
-
-
 // font
-$font-family-base: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  'Microsoft JhengHei', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Microsoft JhengHei", Roboto, "Helvetica Neue", Arial, sans-serif;
 $font-color-base: map-get($theme, base);
 $font-size-base: 16px;
 
 // Body  ----
 $body-bg: #f8f8f8;
-$body-color: map-get($map: $theme, $key: black);
+$body-color: map-get(
+  $map: $theme,
+  $key: black,
+);
 $footer-bg: $gray-400;
 $footer-color: $gray-900;
 
@@ -56,14 +56,14 @@ $link-active-color: map-get($theme, sub);
 $nav-link-color: map-get($theme, light);
 $nav-link-hover-color: #00d7ff;
 
-$footer-bg-color : #323237;
-$footer-title-color : #737d82;
+$footer-bg-color: #323237;
+$footer-title-color: #737d82;
 $footer-list-item-color: #f6f6f6;
-$footer-list-item-hover-color:#b9bcbf;
+$footer-list-item-hover-color: #b9bcbf;
 
-$footer-icon-text-color:#b9bcbf;
+$footer-icon-text-color: #b9bcbf;
 
-$footer-select : #fff;
+$footer-select: #fff;
 
 // box / container
 $box-width: (
@@ -71,13 +71,11 @@ $box-width: (
   lg: 940px,
   md: 720px,
   sm: 576px,
-  
 );
 $box-space: 15px;
 
 // breakpoint
 $breakpoints: (
-  
   xl: 1200px,
   lg: 992px,
   md: 768px,
@@ -87,4 +85,4 @@ $breakpoints: (
 // others
 $global-block-radius: 10px;
 $global-block-shadow: 10px;
-$global-shadow:  0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+$global-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
