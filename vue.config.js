@@ -1,12 +1,12 @@
 module.exports = {
-  css:{
+  publicPath: process.env.NODE_ENV === "production" ? "/fake-grr/dist/" : "/",
+  css: {
     sourceMap: process.env.NODE_ENV !== "production",
-    loaderOptions:{
-      scss:{
-        prependData: "@import '~@/assets/scss/env.scss';"
-      }
-    }
-
+    loaderOptions: {
+      scss: {
+        prependData: "@import '~@/assets/scss/env.scss';",
+      },
+    },
   },
   chainWebpack: (config) => {
     const svgRule = config.module.rule("svg");
