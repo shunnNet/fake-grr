@@ -10,14 +10,7 @@ import SwiperCore, {
 
 SwiperCore.use([EffectFade, Navigation, Pagination, Thumbs, Autoplay, Controller]);
 
-import "swiper/swiper.scss";
-import "swiper/components/pagination/pagination.min.css";
 
-import "swiper/components/controller/controller.scss";
-import "swiper/components/effect-fade/effect-fade.scss";
-// https://github.com/nolimits4web/swiper/issues/3408
-
-import "swiper/components/thumbs/thumbs.scss";
 
 export default {
   install: (app) => {
