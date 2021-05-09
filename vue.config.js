@@ -1,6 +1,6 @@
 module.exports = {
   css:{
-    sourceMap: process.env !== "production",
+    sourceMap: process.env.NODE_ENV !== "production",
     loaderOptions:{
       scss:{
         prependData: "@import '~@/assets/scss/env.scss';"
