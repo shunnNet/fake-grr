@@ -17,8 +17,8 @@ nav.subNav
 </template>
 
 <script>
-import LogoBox from "@/components/LogoBox.vue";
-import IconText from "@/components/IconText.vue";
+import LogoBox from "@/components/layout/sub/LogoBox.vue";
+
 import { ref, defineAsyncComponent } from "vue";
 import { watchMedia } from "@/assets/scripts/mediaStore.js";
 
@@ -30,9 +30,12 @@ import {
 export default {
   components: {
     LogoBox,
-    IconText,
-    Hamburger: defineAsyncComponent(() => import("@/components/Hamburger.vue")),
-    GroupList: defineAsyncComponent(() => import("@/components/GroupList.vue")),
+    Hamburger: defineAsyncComponent(() =>
+      import("@/components/libs/Hamburger.vue")
+    ),
+    GroupList: defineAsyncComponent(() =>
+      import("@/components/libs/GroupList.vue")
+    ),
   },
   setup() {
     const listComponent = ref("Hamburger");
@@ -89,7 +92,7 @@ export default {
       margin-top: 60px;
     }
   }
-  &__social {
+  &__social.iconText {
     @extend %reset-a;
     display: flex;
     justify-content: flex-start;

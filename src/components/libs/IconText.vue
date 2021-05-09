@@ -1,5 +1,5 @@
 <template lang='pug'>
-div(v-is="tag" class="iconText" :class="{'iconText--reverse': reverse}")
+.iconText(v-is="tag", :class="{ 'iconText--reverse': reverse }")
   component(:is="icon", :class="['iconText-icon', iconClass]")
   slot
 </template>
@@ -18,12 +18,11 @@ export default {
     icon: {
       type: String,
     },
-    reverse :{
+    reverse: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  
 };
 </script>
 
@@ -43,6 +42,16 @@ export default {
       margin-right: 0;
       margin-left: 5px;
     }
+  }
+}
+.iconText--more {
+  @extend %reset-a;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.1668em;
+  opacity: 0.7;
+  .iconText-icon {
+    margin-left: 7px;
   }
 }
 </style>

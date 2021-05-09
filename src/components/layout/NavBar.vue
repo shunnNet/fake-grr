@@ -23,7 +23,7 @@ nav.mainNav(
 
 <script>
 import { computed, ref, onUnmounted } from "vue";
-import TogglerMenu from "@/components/TogglerMenu.vue";
+import TogglerMenu from "@/components/libs/TogglerMenu.vue";
 import { watchMedia } from "@/assets/scripts/mediaStore.js";
 
 export default {

@@ -5,7 +5,7 @@ Swiper.index__entryBanner(
   pagination,
   :autoplay="{ delay: 10000, disableOnInteraction: false }"
 )
-  SwiperSlide.movie(key="video")
+  SwiperSlide.entryMovie(tag="a", href="https://www.gogoro.com/about")
     video(
       :src="require('@/assets/images/home_vision_1080_v02.mp4')",
       autoplay="autoplay",
@@ -13,72 +13,37 @@ Swiper.index__entryBanner(
       control,
       muted
     )
-    .movie__content
-      h2.movie__title 
+    .entryMovie__content
+      h2.entryMovie__title 
         | A Better Way Forward to
         br
         | Smarter, Cleaner Cities
-      p.movie__desc
+      p.entryMovie__desc
         | Gogoro is reinventing urban transportation with an ecosystem of sustainable energy solutions for the world’s modern cities.
-  SwiperSlide.vivaMix(key="vivaMix")
+  SwiperSlide.vivaMix
     .vivaMix__content
-      .vivaMix__slogan MIX IT UP
+      h2.vivaMix__slogan MIX IT UP
       a.vivaMix__more(href="https://www.gogoro.com/smartscooter/viva/mix/") LEARN MORE
 
 .index__box
   section.index__campaigns
     ul.campaignList
       li.campaignList__item(v-for="item in campaignList", :key="item.title")
-        a.campaignList__poster(
-          :href="item.link",
-          :style="{ backgroundImage: item.background }"
-        )
-          h3.campaignList__title {{ item.title }}
-          p.campaignList__desc {{ item.desc }}
-  section.index__battery.battery
-    .battery__content
-      span.battery__titleSub Gogoro Network
-      h2.battery__title The largest battery swapping network in the world
-      p.battery__desc
-        | Gogoro Network® manages over
-        span.battery__em 200,000 battery swaps a day
-        |
-        | at 2,088 GoStation® across Taiwan, that's enough power to ride 15,000,000 km.
-      IconText.battery__more.moreContent(
-        tag="a",
-        href="https://network.gogoro.com/tw/en/coverage/",
-        icon="Arrow2",
-        reverse
-      ) SEE OUR NETWORK
-    .battery__figure
+        CampaignCard(:campaign="item")
+
+  section.index__battery
+    BannerStation
 
   section.index__photos
     ul.photoList
-      li.photoList__item(
-        v-for="item in photoList",
-        :key="item.title",
-        :style="{ backgroundImage: item.background }"
-      )
-        a.photoList__poster(:href="item.link")
-          p.photoList__desc {{ item.desc }}
-          h3.photoList__title {{ item.title }}
-            br
-            | {{ item.title2 }}
+      li.photoList__item(v-for="item in photoList", :key="item.title")
+        PhotoCard.photoList__card(:info="item")
 
-  section.index__eeyo.eeyo
-    .eeyo__content
-      h3.eeyo__title Introducing
-        br.eeyo__titleWrap 
-        |
-        | Gogoro Eeyo
-      p.eeyo__desc From the cloud to the road, this is eBike reimagined. Ultralight, totally digital, and an absolute blast to ride.
-      IconText.eeyo__more.moreContent(
-        tag="a",
-        href="https://eeyo.bike",
-        icon="Arrow2",
-        reverse
-      ) LEARN MORE
-  Quotes
+  section.index__eeyo
+    BannerEeyo
+
+  section.index__quotes
+    BannerQuotes(:quotes="quotesList")
 
   section.index__impact
     Impact
@@ -86,17 +51,21 @@ Swiper.index__entryBanner(
 
 <script>
 import { ref } from "vue";
-import IconText from "@/components/IconText.vue";
-import SwitchBg from "@/components/SwitchBg.vue";
-import Quotes from "@/components/Quotes.vue";
-import Impact from "@/components/Impact.vue";
+import BannerQuotes from "@/components/layout/sub/BannerQuotes.vue";
+import Impact from "@/components/layout/sub/Impact.vue";
+import CampaignCard from "@/components/layout/sub/CampaignCard.vue";
+import PhotoCard from "@/components/layout/sub/PhotoCard.vue";
+import BannerStation from "@/components/layout/sub/BannerStation.vue";
+import BannerEeyo from "@/components/layout/sub/BannerEeyo.vue";
 
 export default {
   components: {
-    IconText,
-    SwitchBg,
-    Quotes,
+    BannerQuotes,
     Impact,
+    CampaignCard,
+    PhotoCard,
+    BannerStation,
+    BannerEeyo,
   },
   setup() {
     const campaignList = ref([
@@ -135,9 +104,50 @@ export default {
         background: `url(" ${require("@/assets/images/social_post_bg1.jpg")} ")`,
       },
     ]);
+    const quotesList = ref([
+      {
+        quote: "You have to see it to really appreciate how cool it is,",
+        sub: "Al Gore, Wired, December 2017",
+        iconOff: require("@/assets/images/quotes_logo_wired_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_wired_on.jpg"),
+      },
+      {
+        quote: "The 9 Coolest Gadgets from CES 2016",
+        sub: "Time",
+        iconOff: require("@/assets/images/quotes_logo_time_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_time_on.jpg"),
+      },
+      {
+        quote: "2018 Asian Company of the Year",
+        sub: "Cleantech 100",
+        iconOff: require("@/assets/images/quotes_logo_cleantech_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_cleantech_on.jpg"),
+      },
+      {
+        quote: "2015 CES Best In Show Award",
+        sub: "The Verge",
+        iconOff: require("@/assets/images/quotes_logo_verge_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_verge_on.jpg"),
+      },
+
+      {
+        quote: "2017 Nikkei Asian Review Award for Excellence",
+        sub: "Nikkei Asian Review",
+        iconOff: require("@/assets/images/quotes_logo_nikkei_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_nikkei_on.jpg"),
+      },
+      {
+        quote: "Selected for the 2016 Sustainia 1000",
+        sub: "Sustainia",
+        iconOff: require("@/assets/images/quotes_logo_sustania_off.jpg"),
+        iconOn: require("@/assets/images/quotes_logo_sustania_on.jpg"),
+      },
+    ]);
+
     return {
       campaignList,
       photoList,
+      quotesList,
     };
   },
 };
@@ -147,54 +157,12 @@ export default {
 $gutter: 6px;
 
 .index {
-  &__entryBanner {
-    position: relative;
-    height: calc(100vh - 80px);
-    min-height: 420px;
-    max-height: 760px;
-
-    @include sm {
-      height: calc(100vh - 120px);
-      min-height: 560px;
-      max-height: 1140px;
-    }
-    @include md {
-      height: calc(100vh - 120px);
-      min-height: 680px;
-      max-height: 1200px;
-    }
-    @include xl {
-      height: calc(100vh - 200px);
-      max-height: 1640px;
-      min-height: 820px;
-    }
-    &.swiper-container-horizontal > .swiper-pagination-bullets {
-      bottom: 20px;
-    }
-    .swiper-pagination-bullet {
-      opacity: 1 !important; // overwrite library default
-      border: 2px solid #737d82;
-      background-color: #737d82;
-      height: 8px;
-      width: 8px;
-      margin: 0 10px !important;
-      @include lg {
-        height: 12px;
-        width: 12px;
-      }
-      &-active {
-        border: 2px solid #fff;
-        background-color: rgba(115, 125, 130, 0);
-      }
-    }
-  }
   &__box {
     max-width: 1140px;
     margin: 0 auto;
   }
   &__campaigns {
     margin-top: $gutter;
-
   }
   &__photos {
     margin-top: $gutter;
@@ -205,7 +173,7 @@ $gutter: 6px;
   &__battery {
     margin-top: $gutter;
   }
-  &__appreciate {
+  &__quotes {
     margin-top: $gutter;
   }
   &__impact {
@@ -213,23 +181,64 @@ $gutter: 6px;
   }
 }
 
+.index__entryBanner {
+  position: relative;
+  height: calc(100vh - 80px);
+  min-height: 420px;
+  max-height: 760px;
 
-.movie {
-  user-select: none;
+  @include sm {
+    height: calc(100vh - 120px);
+    min-height: 560px;
+    max-height: 1140px;
+  }
+  @include md {
+    height: calc(100vh - 120px);
+    min-height: 680px;
+    max-height: 1200px;
+  }
+  @include xl {
+    height: calc(100vh - 200px);
+    max-height: 1640px;
+    min-height: 820px;
+  }
+  &.swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: 20px;
+  }
+  .swiper-pagination-bullet {
+    opacity: 1 !important; // overwrite library default
+    border: 2px solid #737d82;
+    background-color: #737d82;
+    height: 8px;
+    width: 8px;
+    margin: 0 10px !important;
+    @include lg {
+      height: 12px;
+      width: 12px;
+    }
+    &-active {
+      border: 2px solid #fff;
+      background-color: rgba(115, 125, 130, 0);
+    }
+  }
+}
+
+.entryMovie {
+  @extend %reset-a;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fff;
   color: #ffffff;
+  user-select: none;
+
   &__content {
-    position: absolute;
+    @include absoluteCenter();
     width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
     max-width: 660px;
-    text-align: center;
     padding: 0 16px;
+    text-align: center;
   }
   &__title {
     font-size: 28px;
@@ -244,11 +253,11 @@ $gutter: 6px;
     }
   }
   &__desc {
-    font-size: 16px;
-    line-height: 1.25;
     max-width: 18.5em;
     margin: 0 auto;
     margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.25;
 
     @include sm {
       font-size: 18px;
@@ -264,18 +273,17 @@ $gutter: 6px;
 }
 
 .vivaMix {
-  user-select: none;
   position: relative;
   background-image: url("~@/assets/images/viva.png"),
     url("~@/assets/images/banner.jpg");
   background-position: center, center;
   background-repeat: no-repeat;
   background-size: 180%, cover;
+  user-select: none;
   color: #ffffff;
   @include md {
     background-image: url("~@/assets/images/viva_lg.png"),
       url("~@/assets/images/banner_lg.png");
-
     background-size: contain, cover;
   }
 
@@ -301,18 +309,15 @@ $gutter: 6px;
   }
 
   &__slogan {
-    color: #ffffff;
-    font-size: 0;
+    @include hide-text();
     width: 90vw;
-    max-width: 305px;
     height: 70px;
-    overflow: hidden;
-    text-indent: -199%;
+    max-width: 305px;
+    color: #ffffff;
     background: url("~@/assets/images/viva-mix-slogan.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    @include hide-text();
     @include xl {
       max-width: 402px;
     }
@@ -320,23 +325,21 @@ $gutter: 6px;
   &__more {
     @extend %reset-a;
     display: flex;
+    align-items: center;
+    height: 40px;
+    margin-top: 16px;
+    padding: 0 1.66em 0 1.8em;
     border: 2px solid #fff;
     border-radius: 20px;
-    margin-top: 16px;
-    border: 2px solid #ffffff;
-    border-radius: 20px;
-    height: 40px;
-    cursor: pointer;
-    transition: color 0.25s, background-color 0.25s;
-    padding: 0 1.66em 0 1.8em;
-    align-items: center;
     font-weight: 900;
     font-style: italic;
     letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: color 0.25s, background-color 0.25s;
 
     @include sm {
-      padding: 0 1.86em 0 2em;
       height: 48px;
+      padding: 0 1.86em 0 2em;
       border-radius: 24px;
     }
 
@@ -350,34 +353,12 @@ $gutter: 6px;
 .campaignList {
   display: flex;
   flex-direction: column;
-  color: #323237;
-  text-align: center;
 
   &__item {
     margin-top: $gutter;
-
-    &:first-child {
-      margin-top: 0;
-    }
   }
-  &__poster {
-    @extend %reset-a;
-    display: block;
-    height: 510px;
-    padding-top: 60px;
-    background-size: auto 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  &__title {
-    font-weight: bold;
-    font-size: 28px;
-    line-height: 28px;
-  }
-  &__desc {
-    margin-top: 8px;
-    font-size: 16px;
-    line-height: 1.125;
+  &__item:first-child {
+    margin-top: 0;
   }
   @include lg {
     flex-direction: row;
@@ -385,115 +366,9 @@ $gutter: 6px;
       flex: 1;
       margin-top: 0;
       margin-left: $gutter;
-      &:first-child {
-        margin-left: 0;
-      }
     }
-  }
-}
-
-.battery {
-  position: relative;
-  overflow: hidden;
-
-  height: 703px;
-  padding-top: 40px;
-  background-image: linear-gradient(52deg, #40fdcb, #40fdcb 7%, #24ee2c);
-  @include sm {
-    background-image: linear-gradient(40deg, #40fdcb, #40fdcb 7%, #24ee2c);
-  }
-  @include md {
-    display: flex;
-    justify-content: flex-end;
-    height: auto;
-    padding-top: 0;
-    background-image: linear-gradient(60deg, #40fdcb, #40fdcb 7%, #24ee2c);
-  }
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 32px;
-    text-align: center;
-    @include md {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      align-items: flex-start;
-      text-align: left;
-      padding: 0 60px;
-      left: 0;
-    }
-    @include xl {
-      padding: 0 100px;
-    }
-  }
-  &__titleSub {
-    opacity: 0.7;
-    font-weight: 600;
-    font-size: 18px;
-  }
-  &__title {
-    width: 100%;
-    max-width: 380px;
-    margin-top: 28px;
-    line-height: 1.1;
-    font-weight: 500;
-    font-size: 28px;
-    letter-spacing: -0.5px;
-    @include md {
-      margin-top: 46px;
-      font-size: 32px;
-      max-width: 9em;
-    }
-    @include lg {
-      font-size: 42px;
-    }
-  }
-  &__desc {
-    font-weight: 400;
-    margin-top: 20px;
-    max-width: 400px;
-    line-height: 1.25;
-  }
-  &__em {
-    font-weight: bold;
-    display: inline-block;
-  }
-  &__more {
-    margin-top: 32px;
-  }
-  &__figure {
-    &::before {
-      content: "";
-      position: absolute;
-      width: 380px;
-      height: 360px;
-
-      background-image: url("~@/assets/images/station-gn.png");
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center bottom;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      @include md {
-        position: static;
-        display: block;
-        padding-bottom: 94.54409567%;
-        width: auto;
-        height: auto;
-        background-image: url("~@/assets/images/station-gn@2x.png");
-        transform: none;
-      }
-    }
-    @include md {
-      width: 70%;
-      transform: translateX(20%);
-    }
-    @include lg {
-      width: 688px;
-      transform: none;
+    &__item:first-child {
+      margin-left: 0;
     }
   }
 }
@@ -505,41 +380,9 @@ $gutter: 6px;
   color: #fff;
   &__item {
     margin-top: $gutter;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    &:first-child {
-      margin-top: 0;
-    }
   }
-  &__poster {
-    @extend %reset-a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 510px;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  &__desc {
-    position: absolute;
-    top: 40px;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.28;
-  }
-  &__title {
-    line-height: 1.1;
-    font-size: 27px;
-    font-weight: 700;
-    text-align: center;
-    @include sm {
-      font-size: 32px;
-    }
-    @include lg {
-      font-size: 42px;
-    }
+  &__item:first-child {
+    margin-top: 0;
   }
   @include md {
     flex-direction: row;
@@ -547,71 +390,16 @@ $gutter: 6px;
       flex: 1;
       margin-top: 0;
       margin-left: $gutter;
-      &:first-child {
-        margin-left: 0;
-      }
     }
-    &__poster {
+    &__item:first-child {
+      margin-left: 0;
+    }
+  }
+  &__card {
+    height: 510px;
+    @include md {
       height: 340px;
     }
-  }
-}
-.eeyo {
-  background-color: #f2f2f2;
-  background-image: url("~@/assets/images/profile_shot_bicycle.png");
-  background-repeat: no-repeat;
-  background-size: 500px 300px;
-  background-position: center bottom 16px;
-  height: 625px;
-  padding-top: 40px;
-
-  @include sm {
-    height: 748px;
-    padding-top: 60px;
-    background-size: 700px 420px;
-    background-position: center bottom 10px;
-  }
-  @include md {
-    height: 680px;
-    background-size: 900px 540px;
-    background-position: center bottom -132px;
-  }
-  &__content {
-    padding: 0 32px;
-    text-align: center;
-  }
-
-  &__title {
-    line-height: 1.1;
-    letter-spacing: -0.012em;
-    font-size: 42px;
-    font-weight: 500;
-  }
-  &__titleWrap {
-    display: block;
-    @include md {
-      display: none;
-    }
-  }
-  &__desc {
-    font-size: 16px;
-    max-width: 464px;
-    margin: 0 auto;
-    margin-top: 20px;
-    font-weight: light;
-  }
-  &__more {
-    margin-top: 36px;
-  }
-}
-.moreContent {
-  @extend %reset-a;
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: 0.1668em;
-  opacity: 0.7;
-  .iconText-icon {
-    margin-left: 7px;
   }
 }
 </style>

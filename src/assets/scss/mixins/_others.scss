@@ -45,13 +45,31 @@
   border-right: 1px solid #000;
 }
 
-
 @mixin hide-text {
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
-@function color($name){
-  @return map-get($map: $theme, $key: $name)
+@function color($name) {
+  @return map-get($map: $theme, $key: $name);
+}
 
+@mixin absoluteCenter($x: true, $y: true) {
+  position: absolute;
+  @if ($x == true) {
+    left: 50%;
+    @if ($y == true) {
+      transform: translate(-50%, -50%);
+    } @else {
+      transform: translate(-50%, 0%);
+    }
+  }
+  @if ($y == true) {
+    top: 50%;
+    @if ($x == true) {
+      transform: translate(-50%, -50%);
+    } @else {
+      transform: translate(0%, -50%);
+    }
+  }
 }

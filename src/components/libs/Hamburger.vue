@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import TogglerPlus from "@/components/TogglerPlus.vue";
-import TransitionSlide from "@/components/TransitionSlide.vue";
+import TogglerPlus from "@/components/libs/TogglerPlus.vue";
+import TransitionSlide from "@/components/libs/TransitionSlide.vue";
 import { ref } from "vue";
 import { deepCopy } from "@/assets/scripts/helpers/object.js";
 
