@@ -1,15 +1,15 @@
 <template lang='pug'>
-footer.foot-bar
-  .foot-bar__site-infos
-    .foot-bar__copyright
+footer.footBar
+  .footBar__infos
+    .footBar__copyright
       | Copyright © 2014-2021 Gogoro Inc. All rights reserved.
-    ul.foot-bar__links
-      li.foot-bar__link-item
-        a.foot-bar__link-text Privacy Policy
-      li.foot-bar__link-item
-        a.foot-bar__link-text Terms of Use
+    ul.footBar__links
+      li.footBar__linkItem
+        a.footBar__linkText(href="https://www.gogoro.com/privacy-policy") Privacy Policy
+      li.footBar__linkItem
+        a.footBar__linkText(href="https://www.gogoro.com/terms-of-use") Terms of Use
 
-  select.foot-bar__region(v-model="region")
+  select.footBar__region(v-model="region")
     option(value="Region", disabled) Region
     option(:value="region", v-for="region in regions", :key="region") {{ region }}
 </template>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang='scss'>
-.foot-bar {
+.footBar {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
@@ -50,7 +50,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
   }
-  &__site-infos {
+  &__infos {
     @include lg {
       display: flex;
     }
@@ -68,12 +68,12 @@ export default {
     display: flex;
     justify-content: center;
   }
-  &__link-item {
+  &__linkItem {
     &:last-child {
       margin-left: 20px;
     }
   }
-  &__link-text {
+  &__linkText {
     @extend %reset-a;
     cursor: pointer;
     color: #737d82;
@@ -87,18 +87,18 @@ export default {
   }
   &__region {
     @extend %reset-select;
-    font-size: 12px;
     width: auto;
-    outline: none;
-    background-color: #323237;
-    border: none;
-    color: #fff;
+    margin-bottom: 30px;
     padding-right: 15px;
+    border: none;
+    background-color: #323237;
     background-image: url("~@/assets/images/icon/Arrow.svg");
     background-size: 0.8em;
     background-repeat: no-repeat;
     background-position: right center;
-    margin-bottom: 30px;
+    outline: none;
+    color: #fff;
+    font-size: 12px;
     @include lg {
       margin-bottom: 0;
     }
