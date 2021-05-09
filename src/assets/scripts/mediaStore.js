@@ -15,9 +15,17 @@ for (const key in medias) {
   const { watch, callbacks } = medias[key];
   medias[key].mql = matchMedia(watch);
 
-  medias[key].mql.addEventListener("change", (event) => {
-    callbacks.forEach((cb) => cb(event.matches));
-  });
+  if (medias[key].mql.addEventListener) {
+    medias[key].mql.addEventListener("change", (event) => {
+      callbacks.forEach((cb) => cb(event.matches));
+    });
+  } else { 
+    // fix safari issue
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList
+    medias[key].mql.addListener((event) => {
+      callbacks.forEach((cb) => cb(event.matches));
+    });
+  }
 }
 
 export function watchMedia(name, callback, runInit = true) {
@@ -26,7 +34,7 @@ export function watchMedia(name, callback, runInit = true) {
 
     runInit && callback(medias[name].mql.matches);
   }
-  return function()  {
+  return function() {
     const pos = medias[name].callbacks.findIndex(callback);
     medias[name].callbacks.splice(pos, 1);
   };
