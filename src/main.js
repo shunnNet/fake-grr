@@ -1,4 +1,14 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import loadSvg from "@/plugins/loadSvg.js";
+import loadSwiper from "@/plugins/swiper.js";
+import commonFeature from "@/plugins/common.js";
 
-createApp(App).mount('#app')
+import "@/assets/scss/all.scss";
+import "@/assets/scripts/mediaStore.js";
+
+createApp(App)
+  .use(loadSvg)
+  .use(loadSwiper)
+  .use(commonFeature)
+  .mount("#app");
