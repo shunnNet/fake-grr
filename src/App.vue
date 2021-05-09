@@ -9,6 +9,9 @@ main.layout-main
   .box-sm
     NavSub
     FootBar
+
+transition(name="privacy", appear)
+  PrivacyConfirm(v-if="!isPolicyConfirmed", v-model="isPolicyConfirmed")
 </template>
 
 <script>
@@ -16,14 +19,26 @@ import NavBar from "@/components/layout/NavBar.vue";
 import NavSub from "@/components/layout/NavSub.vue";
 import FootBar from "@/components/layout/FootBar.vue";
 import Index from "@/components/pages/Index.vue";
+import PrivacyConfirm from "@/components/modal/PrivacyConfirm.vue";
+import { ref } from "vue";
 
 export default {
+  setup() {
+    const isPolicyConfirmed = ref(
+      localStorage.getItem("acceptPolicy") !== null
+    );
+
+    return {
+      isPolicyConfirmed,
+    };
+  },
   name: "App",
   components: {
     NavBar,
     NavSub,
     FootBar,
     Index,
+    PrivacyConfirm,
   },
 };
 </script>
@@ -50,6 +65,21 @@ export default {
     width: 100%;
     margin-top: 10px;
     background-color: #323237;
+  }
+}
+.privacy {
+  &-enter-from,
+  &-leave-to {
+    bottom: 0;
+    transform: translateY(100%);
+  }
+  &-enter-to,
+  &-leave-from {
+    transform: translateY(0%);
+  }
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.5s;
   }
 }
 </style>
